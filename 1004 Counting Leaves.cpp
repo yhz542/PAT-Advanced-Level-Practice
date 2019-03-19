@@ -4,10 +4,10 @@
 using namespace std;
 struct node
 {
-	int parent = 0;
-	int level = -1;
-	int numOfChild = 0;
-	vector<int> child;
+	int parent = 0;//父节点
+	int level = -1;//当前的层次等级
+	int numOfChild = 0;//子结点数目
+	vector<int> child;//连接的子结点
 };
 int main()
 {
@@ -32,7 +32,7 @@ int main()
 	vector<int> store;
 	store.reserve(100);
 	store.push_back(1);
-	int deepth = 0;
+	int deepth = 0;//用于存储最大深度。
 	while (!store.empty())
 	{
 		int IDnow = store.back();
