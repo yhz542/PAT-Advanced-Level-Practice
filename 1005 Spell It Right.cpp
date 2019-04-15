@@ -1,5 +1,5 @@
-#include <iostream>//需要注意的是输入N最大可以取到10的100次方。一般的整形是放不下这么大的数的。所以需要用字符串存储。
-#include <cstdio>
+#include <iostream>//需要注意的是输入N最大可以取到10的100次方。一般的整形是放不下这么大的数的。所以需要用字符串存储。另外可以一次读取一个字符
+#include <cstdio>//直到读到换行符或者eof停止。这样只需对输入扫描一遍，理论上会更快。
 #include <string>
 using namespace std;
 void NumberToEnglish(int);
