@@ -22,7 +22,7 @@ int main()
 			timeCost += (now - before) * 6 + 5;
 		}
 		else
-			timeCost += 5;
+			timeCost += 5;//如果有没通过的测试点，看一下是不是没考虑连续相同的输入情况，即在一层不断等待
 		before = now;
 	}
 	cout << timeCost << endl;
