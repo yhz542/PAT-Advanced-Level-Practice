@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>//自己写的最早版本，实话说，逻辑较为复杂不太满意。
 #include<vector>
 #include<queue>
 #include<cstdio>
