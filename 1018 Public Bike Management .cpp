@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <cstdio>
 #define INFINITE (2<<24)
 using namespace std;
 class PublicBike
@@ -41,7 +40,7 @@ void PublicBike::GetInput(void)//获取输入
 	for (unsigned i = 0,currentNum, perfectCondition = maxCap >> 1; i < totalNumStation; ++i)
 	{
 		cin >> currentNum;
-		curNumBike.push_back(currentNum-perfectCondition);
+		curNumBike.push_back(currentNum-perfectCondition);//直接存储距离完美状态的差值，正值代表多，负值代表少，方便后续处理
 		graph[i][i] = 0;
 	}
 	for (unsigned i = 0,S1,S2,T12; i < quantityOfRoad; ++i)
@@ -53,8 +52,8 @@ void PublicBike::GetInput(void)//获取输入
 }
 /**********************************************************************************************
 寻找距离最短的结点
-输入：1.当前还剩下的结点数组 2.到每个结点的最短距离数组
-输出：最小距离的结点标号
+输入：1.当前还剩下的结点数组 2.原点到每个结点的最短距离长度的数组
+输出：所有剩余结点中距离最小的结点
 本函数用的是桶排序的思想，每次取完后，将最小距离结点放的剩余数组的最后面，
 然后删除，以此降低数组规模，加快运行速度，代价是需要有一个额外的数组
 **************************************************************************************************/
@@ -120,54 +119,54 @@ void PublicBike::Solve()
 	}
 	 cout <<  " "<<out << endl;
 }
-
+//使用的倒序的深度优先，即由问题结点到管理中心（原点）的顺序进行遍历
 void PublicBike::DFS(unsigned takeBack,unsigned sendOut,unsigned curVertex)
 {
 	dfsBuffer.push_back(curVertex);
-	if (!curVertex)
+	if (!curVertex)//回到管理中心，即原点，进行判断是否比之前存储的结果更优。如果更优替最佳路线方案
 	{
-		if (in > sendOut|| in == sendOut && out > takeBack)
+		if (in > sendOut|| in == sendOut && out > takeBack)//如果发出去的更少，或者发出去的一样但是收回的更少
 		{
 			in = sendOut;
 			out = takeBack;
-			bestRoad = dfsBuffer;
+			bestRoad = dfsBuffer;//替换最佳路线
 		}
-		dfsBuffer.pop_back();
+		dfsBuffer.pop_back();//弹出当前结点
 		return;
 	}
-	else
+	else//中间过程结点，计算需要从管理中心拿多少自行车出去，以及需要给中心带回多少自行车
 	{
-		int curDivert = curNumBike[curVertex-1];
-		if (curDivert > 0)//要带回去的
+		int curDivert = curNumBike[curVertex-1];//当前的站点的自行车偏移值，如果为正，代表车多了，如果为负代表车少了。
+		if (curDivert > 0)//车多了 要带回去
 		{
-			if (!sendOut)
+			if (!sendOut)//如果后面的站点不需要车
 			{
-				takeBack += curDivert;
+				takeBack += curDivert;//累加带回去的自行车数量
 			}
-			else
-			{
-				if ((int)sendOut > curDivert)
-					sendOut -= curDivert;
-				else
+			else//如果后面的站点需要车
+			{//比较，看是多出来的车多，还是后面缺的车多
+				if ((int)sendOut >= curDivert)//如果缺的车多
+					sendOut -= curDivert;//减少却的车的数量
+				else//如果多出来的车够填缺的车的坑
 				{
-					takeBack += (curDivert - sendOut);
-					sendOut = 0;
+					takeBack += (curDivert - sendOut);//先计算多了多少车出来，再和后面需要带回去的车数目累加到一起
+					sendOut = 0;//那么就不缺车了，不需要管理中心再带车出来。
 				}
 			}
 		}
-		else if (curDivert < 0)
+		else if (curDivert < 0)//本站点车少了，需要中心发车来
 		{
-			sendOut += (-curDivert);
-		}
-		if (!pred[curVertex].empty())
+			sendOut += (-curDivert);//累加需要中心发多少车。
+		}//注意，因为是反向遍历，所以当前站点永远是"最后一个站点"，也就是说如果当前站点多了车，后面就没有站点可以把多出的车塞进去了。
+		if (!pred[curVertex].empty())//继续处理当前结点的前一个结点
 		{
-			for (auto elem : pred[curVertex])
+			for (auto elem : pred[curVertex])//因为可能存在多条最短路径，所以进行遍历
 			{
 				DFS(takeBack,sendOut,elem);
 			}
 		}
 	}
-	dfsBuffer.pop_back();
+	dfsBuffer.pop_back();//弹出已经处理过的当前站点
 }
 /*
 测试用例
