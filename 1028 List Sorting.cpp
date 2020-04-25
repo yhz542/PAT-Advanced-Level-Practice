@@ -43,13 +43,13 @@ public:
 		return false;
 	}
 };
-class pta1027
+class pta1028
 {
 	int N, C;
 	vector<record> data;
 	vector<unsigned> index;
 public:
-	pta1027(istream& in)
+	pta1028(istream& in)
 	{
 		cin >> N>>C;
 		data.resize(N);
@@ -75,7 +75,7 @@ public:
 };
 int main()
 {
-	pta1027 question(cin);
+	pta1028 question(cin);
 	question.Solve();
 	question.Print();
 }
