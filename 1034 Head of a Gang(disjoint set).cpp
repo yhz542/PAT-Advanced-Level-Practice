@@ -1,6 +1,6 @@
 #include<iostream>//并查集方法，依然用的字符串到数字的映射。理论上来说应该可以直接利用map将这一步骤优化掉，节约内存空间
-#include<vector>
-#include<string>
+#include<vector>//算法思想，根节点是团伙中通话时间最长的人，子节点是团伙中其他人，总通话时间等于团伙中所有人通话时间之和除以2
+#include<string>//这里大部分的处理放在输入时进行，一边读取输入，一边实时更新根节点。
 #include<map>
 #include<queue>
 #include<algorithm>
