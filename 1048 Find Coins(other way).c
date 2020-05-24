@@ -1,5 +1,5 @@
-#include<cstdio>
-#include<cstdlib>
+#include<stdio.h>
+#include<stdlib.h>
 typedef unsigned int uint;
 int compare(const void* p1, const void* p2)
 {
