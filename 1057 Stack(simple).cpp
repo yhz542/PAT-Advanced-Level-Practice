@@ -25,7 +25,7 @@ class pta1057
 		for (size_t i = 0 ; i< numSet[index].size() ; ++i)
 		{
 			curOrder += numSet[index][i];
-			if (curOrder >= targetOrder)
+			if (curOrder >= targetOrder)//注意是大于不是等于，因为同一个数可能出现多次
 			{
 				printf("%d\n", index*1000+i);
 				break;
