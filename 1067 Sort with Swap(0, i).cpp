@@ -1,5 +1,5 @@
-#include<iostream>
-#include<cstdlib>
+#include<iostream>//解题思路，首先存储所有需要下标不等于值的元素，然后看0此时的下标，如果0的下标不为0，就将它下标对应的数换到0的位置，那么这样就减少了一个需要处理的元素。如果0的下标等于0，就将
+#include<cstdlib>//它和需要处理的随便一个元素交换位置。然后再按照0的下标不为0的方法处理。即可解决本问题。
 #include<cstdio>
 #include<vector>
 #include<set>
